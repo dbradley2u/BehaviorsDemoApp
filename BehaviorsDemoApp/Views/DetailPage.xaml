@@ -47,30 +47,71 @@
         </VisualStateManager.VisualStateGroups>
 
         <!--  header  -->
-        <controls:PageHeader x:Name="pageHeader" Frame="{x:Bind Frame}"
+        <!--<controls:PageHeader x:Name="pageHeader" Frame="{x:Bind Frame}"
                              RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True" Text="Detail Page" />
+                             RelativePanel.AlignTopWithPanel="True" Text="Detail Page" />-->
 
-        <!--  content  -->
-        <ScrollViewer Padding="12,8,0,0" RelativePanel.AlignBottomWithPanel="True"
+        <controls:PageHeader x:Name="pageHeader" Frame="{x:Bind Frame}" Text="Detail Page">
+            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
+            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
+            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
+            
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Visible"/>
+            </Interactivity:Interaction.Behaviors>
+        </controls:PageHeader>
+
+            <!--  content  -->
+         <ScrollViewer Padding="12,8,0,0" RelativePanel.AlignBottomWithPanel="True"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True"
                       RelativePanel.Below="pageHeader"
                       VerticalScrollBarVisibility="Auto">
-            <StackPanel>
+
+            <!--<ScrollViewer Padding="12,8,0,0" VerticalScrollBarVisibility="Auto">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:BackButtonBehavior Handled="False">
+                    <Core:ChangePropertyAction Value="Red" PropertyName="Background" />
+                </Behaviors:BackButtonBehavior>
+            </Interactivity:Interaction.Behaviors>-->
+        
+        <StackPanel>
                
-                
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="You passed:" />
                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Value, Mode=OneWay, FallbackValue=DesigntimeValue}" />
 
-                <Button>
+                <!-- <Button>
                     <Interactivity:Interaction.Behaviors>
                         <Behaviors:NavButtonBehavior Frame="{x:Bind Frame}"/>
                     </Interactivity:Interaction.Behaviors>
                     <SymbolIcon Symbol="Back" />
+                </Button> -->
+
+                <Button Content="Do something desktop-only" Visibility="Collapsed">
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:DeviceDispositionBehavior Desktop="True">
+                            <Core:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                        </Behaviors:DeviceDispositionBehavior>
+                    </Interactivity:Interaction.Behaviors>
                 </Button>
-                
+
+                <Button Content="Do something phone-only" Visibility="Collapsed">
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:DeviceDispositionBehavior Virtual="True" Phone="True">
+                            <Core:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                        </Behaviors:DeviceDispositionBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </Button>
+
+                <Button Content="Do something continuum-only" Visibility="Collapsed">
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:DeviceDispositionBehavior Continuum="True">
+                            <Core:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                        </Behaviors:DeviceDispositionBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </Button>
+
             </StackPanel>
         </ScrollViewer>
 
